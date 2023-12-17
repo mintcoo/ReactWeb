@@ -1,9 +1,5 @@
 function App() {
-  return (
-    <div className="App">
-      <header className="App-header"></header>
-    </div>
-  );
+  return <div className="w-20 h-40 bg-cyan-400">체크</div>;
 }
 
 export default App;
