@@ -1,7 +1,8 @@
 import React from "react";
+import Circle from "./Components/Circle";
 
 function App() {
-  return <div>체크</div>;
+  return <Circle CircleColor={"Tomato"}></Circle>;
 }
 
 export default App;
