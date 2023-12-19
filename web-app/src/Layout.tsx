@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import { Outlet } from "react-router-dom";
 
 function Layout(): JSX.Element {
   const [dark, setDark] = useState<boolean>(false);
@@ -25,9 +26,12 @@ function Layout(): JSX.Element {
   }, [dark]);
 
   return (
-    <>
-      <button onClick={changeTheme}>Dark Mode</button>
-    </>
+    <div className="w-screen h-full min-h-screen dark:bg-black">
+      <button className="w-20 h-20 bg-slate-400" onClick={changeTheme}>
+        Dark Mode
+      </button>
+      <Outlet />
+    </div>
   );
 }
 

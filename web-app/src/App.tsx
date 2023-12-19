@@ -1,13 +1,17 @@
+import { Route, Routes } from "react-router-dom";
 import Circle from "./Components/Circle";
 import Layout from "./Layout";
+import Home from "./Screens/Home";
 
 function App() {
   return (
     <>
-      <Layout />
-      <div className="flex flex-col items-center justify-center dark:bg-black dark:text-white">
-        <Circle CircleColor={"Tomato"}></Circle>
-      </div>
+      <Routes>
+        <Route path="" element={<Layout />}>
+          <Route path="/" element={<Home />} />
+          <Route path="/circle" element={<Circle CircleColor={"Tomato"} />} />
+        </Route>
+      </Routes>
     </>
   );
 }
