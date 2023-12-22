@@ -37,20 +37,22 @@ function Coins() {
         <ul className="text-2xl">
           {coins.map((coin) => {
             return (
-              <Link to={`${coin.id}`}>
+              <Link to={`${coin.id}`} state={coin.name}>
                 <li
-                  className="p-4 mb-4 bg-teal-300 rounded-lg hover:text-purple-600"
+                  className="flex items-center p-4 mb-4 bg-teal-300 rounded-lg hover:text-purple-600"
                   key={coin.id}
                 >
-                  {coin.name} →
+                  <img
+                    className="w-10 h-10"
+                    src={`https://cryptocurrencyliveprices.com/img/${coin.id}.png`}
+                  />
+                  <div className="pl-4">{coin.name} →</div>
                 </li>
               </Link>
             );
           })}
         </ul>
       )}
-
-      <Outlet />
     </>
   );
 }

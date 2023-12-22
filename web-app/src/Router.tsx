@@ -11,9 +11,9 @@ function Router() {
     <Routes>
       <Route path="" element={<Layout />}>
         <Route path="/" element={<Home />} />
-        <Route path="/coins" element={<Coins />}>
-          <Route path=":coinId" element={<Coin />} />
-        </Route>
+        <Route path="/coins" element={<Coins />} />
+
+        <Route path="/coins/:coinId" element={<Coin />} />
         <Route path="/circle" element={<Circle CircleColor={"Tomato"} />} />
       </Route>
       <Route path="*" element={<NotFound />} />
