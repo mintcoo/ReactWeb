@@ -26,7 +26,7 @@ function Layout(): JSX.Element {
   }, [dark]);
 
   return (
-    <div className="w-screen h-full min-h-screen p-48 dark:bg-black dark:text-white">
+    <div className="flex flex-col items-center justify-center w-full h-full min-h-screen p-48 dark:bg-black dark:text-white">
       <button className="w-20 h-20 bg-slate-400" onClick={changeTheme}>
         Dark Mode
       </button>
