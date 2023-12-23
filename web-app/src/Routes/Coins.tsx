@@ -17,15 +17,15 @@ function Coins() {
   const [coins, setCoins] = useState<CoinInterface[]>([]);
   const [loading, setLoading] = useState<boolean>(true);
 
-  const getCoins = async () => {
-    const { data } = await axios("https://api.coinpaprika.com/v1/coins");
-    // console.log(data.slice(0, 100), "z");
-    setCoins(data.slice(0, 100));
-    setLoading(false);
-  };
+  // const getCoins = async () => {
+  //   const { data } = await axios("https://api.coinpaprika.com/v1/coins");
+  //   // console.log(data.slice(0, 100), "z");
+  //   setCoins(data.slice(0, 100));
+  //   setLoading(false);
+  // };
 
   useEffect(() => {
-    getCoins();
+    // getCoins();
   }, []);
 
   return (

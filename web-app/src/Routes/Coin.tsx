@@ -57,21 +57,33 @@ function Coin() {
   const [loading, setLoading] = useState<boolean>(true);
   const [tap, setTap] = useState<string>("");
 
-  // const getCoinInfo = async () => {
-  //   const { data: coinData } = await axios(
-  //     `https://api.coinpaprika.com/v1/coins/${coinId}`
-  //   );
-  //   const {
-  //     data: {
-  //       quotes: { USD: coinPrice },
-  //     },
-  //   } = await axios(`https://api.coinpaprika.com/v1/tickers/${coinId}`);
-  //   setInfoData(coinData);
-  //   setPriceData(coinPrice);
-  //   setLoading(false);
-  // };
+  const getCoinInfo = async () => {
+    const { data } = await axios({
+      url: `${process.env.REACT_APP_API_URL}/maplestory/v1/id`,
+      method: "get",
+      headers: {
+        "x-nxopen-api-key": `${process.env.REACT_APP_API_KEY}`,
+      },
+      params: {
+        // 인자로 보낼 데이터
+        character_name: "꿀묘",
+      },
+    });
+    console.log(data.ocid);
+    // const { data: coinData } = await axios(
+    //   `https://api.coinpaprika.com/v1/coins/${coinId}`
+    // );
+    // const {
+    //   data: {
+    //     quotes: { USD: coinPrice },
+    //   },
+    // } = await axios(`https://api.coinpaprika.com/v1/tickers/${coinId}`);
+    // setInfoData(coinData);
+    // setPriceData(coinPrice);
+    setLoading(false);
+  };
   useEffect(() => {
-    // getCoinInfo();
+    getCoinInfo();
 
     if (urlMatch.includes("price")) {
       setTap("price");
