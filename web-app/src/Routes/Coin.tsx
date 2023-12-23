@@ -1,6 +1,7 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
-import { useLocation, useParams } from "react-router-dom";
+import { Link, Outlet, useLocation, useParams } from "react-router-dom";
+import Loading from "../Components/Loading";
 
 interface IInfoData {
   id: string;
@@ -49,28 +50,72 @@ function Coin() {
   const { coinId } = useParams();
   const location = useLocation();
   const name = location.state;
+  const urlMatch = location.pathname;
 
   const [infoData, setInfoData] = useState<IInfoData>();
   const [priceData, setPriceData] = useState<IPriceData>();
+  const [loading, setLoading] = useState<boolean>(true);
+  const [tap, setTap] = useState<string>("");
 
-  const getCoinInfo = async () => {
-    const { data: coinData } = await axios(
-      `https://api.coinpaprika.com/v1/coins/${coinId}`
-    );
-    const {
-      data: { quotes: coinPrice },
-    } = await axios(`https://api.coinpaprika.com/v1/tickers/${coinId}`);
-    setInfoData(coinData);
-    setPriceData(coinPrice);
-  };
+  // const getCoinInfo = async () => {
+  //   const { data: coinData } = await axios(
+  //     `https://api.coinpaprika.com/v1/coins/${coinId}`
+  //   );
+  //   const {
+  //     data: {
+  //       quotes: { USD: coinPrice },
+  //     },
+  //   } = await axios(`https://api.coinpaprika.com/v1/tickers/${coinId}`);
+  //   setInfoData(coinData);
+  //   setPriceData(coinPrice);
+  //   setLoading(false);
+  // };
   useEffect(() => {
-    getCoinInfo();
-  }, []);
+    // getCoinInfo();
+
+    if (urlMatch.includes("price")) {
+      setTap("price");
+    } else if (urlMatch.includes("chart")) {
+      setTap("chart");
+    }
+  }, [coinId, urlMatch]);
 
   return (
-    <div className="text-2xl text-sky-700">
-      여기는 {name || "코인"} 정보입니다
-    </div>
+    <>
+      <div className="text-2xl text-sky-700">
+        여기는 {name || infoData?.name} 정보입니다
+      </div>
+      {loading ? (
+        <Loading />
+      ) : (
+        <>
+          <div className="p-8 rounded-lg bg-slate-300 dark:bg-slate-800">
+            <ul className="text-xl font-bold text-purple-500">
+              <li>Name : {infoData?.name}</li>
+              <li>Rank : {infoData?.rank}</li>
+              <li>Price : {priceData?.price}</li>
+            </ul>
+            <div className="w-96">{infoData?.description}</div>
+          </div>
+        </>
+      )}
+      <div className="flex text-xl font-bold text-white bg-pink-400 justify-evenly w-96 rounded-2xl">
+        <Link
+          className={`${tap == "price" ? "text-pink-700" : ""}`}
+          to={`price`}
+        >
+          Price
+        </Link>
+        <div>|</div>
+        <Link
+          className={`${tap == "chart" ? "text-pink-700" : ""}`}
+          to={`chart`}
+        >
+          Chart
+        </Link>
+      </div>
+      <Outlet />
+    </>
   );
 }
 

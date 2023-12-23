@@ -5,6 +5,8 @@ import Home from "./Routes/Home";
 import NotFound from "./Screens/NotFound";
 import Coin from "./Routes/Coin";
 import Coins from "./Routes/Coins";
+import CoinPrice from "./Routes/CoinPrice";
+import CoinChart from "./Routes/CoinChart";
 
 function Router() {
   return (
@@ -13,7 +15,10 @@ function Router() {
         <Route path="/" element={<Home />} />
         <Route path="/coins" element={<Coins />} />
 
-        <Route path="/coins/:coinId" element={<Coin />} />
+        <Route path="/coins/:coinId" element={<Coin />}>
+          <Route path="price" element={<CoinPrice />} />
+          <Route path="chart" element={<CoinChart />} />
+        </Route>
         <Route path="/circle" element={<Circle CircleColor={"Tomato"} />} />
       </Route>
       <Route path="*" element={<NotFound />} />
