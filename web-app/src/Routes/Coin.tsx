@@ -71,16 +71,16 @@ function Coin() {
       },
     });
     console.log(data.ocid);
-    // const { data: coinData } = await axios(
-    //   `https://api.coinpaprika.com/v1/coins/${coinId}`
-    // );
-    // const {
-    //   data: {
-    //     quotes: { USD: coinPrice },
-    //   },
-    // } = await axios(`https://api.coinpaprika.com/v1/tickers/${coinId}`);
-    // setInfoData(coinData);
-    // setPriceData(coinPrice);
+    const { data: coinData } = await axios(
+      `https://api.coinpaprika.com/v1/coins/${coinId}`
+    );
+    const {
+      data: {
+        quotes: { USD: coinPrice },
+      },
+    } = await axios(`https://api.coinpaprika.com/v1/tickers/${coinId}`);
+    setInfoData(coinData);
+    setPriceData(coinPrice);
     setLoading(false);
   };
   useEffect(() => {

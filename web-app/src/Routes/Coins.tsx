@@ -5,7 +5,7 @@ import Loading from "../Components/Loading";
 import { useQuery } from "react-query";
 import { fetchCoins } from "../api";
 
-interface CoinInterface {
+interface ICoin {
   id: string;
   name: string;
   symbol: string;
@@ -16,10 +16,10 @@ interface CoinInterface {
 }
 
 function Coins() {
-  const [coins, setCoins] = useState<CoinInterface[]>([]);
-  const [loading, setLoading] = useState<boolean>(true);
+  const { isLoading, data } = useQuery<ICoin[]>("allCoins", fetchCoins);
 
-  useQuery("allCoins", fetchCoins);
+  // const [coins, setCoins] = useState<ICoin[]>([]);
+  // const [loading, setLoading] = useState<boolean>(true);
   // const getCoins = async () => {
   //   const { data } = await axios("https://api.coinpaprika.com/v1/coins");
   //   // console.log(data.slice(0, 100), "z");
@@ -34,11 +34,11 @@ function Coins() {
   return (
     <>
       <div className="text-4xl">코인</div>
-      {loading ? (
+      {isLoading ? (
         <Loading />
       ) : (
         <ul className="text-2xl">
-          {coins.map((coin) => {
+          {data?.map((coin) => {
             return (
               <Link to={`${coin.id}`} state={coin.name}>
                 <li
