@@ -2,6 +2,8 @@ import axios from "axios";
 import { useEffect, useState } from "react";
 import { Link, Outlet } from "react-router-dom";
 import Loading from "../Components/Loading";
+import { useQuery } from "react-query";
+import { fetchCoins } from "../api";
 
 interface CoinInterface {
   id: string;
@@ -17,6 +19,7 @@ function Coins() {
   const [coins, setCoins] = useState<CoinInterface[]>([]);
   const [loading, setLoading] = useState<boolean>(true);
 
+  useQuery("allCoins", fetchCoins);
   // const getCoins = async () => {
   //   const { data } = await axios("https://api.coinpaprika.com/v1/coins");
   //   // console.log(data.slice(0, 100), "z");
