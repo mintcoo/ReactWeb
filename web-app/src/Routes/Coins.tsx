@@ -17,6 +17,7 @@ interface ICoin {
 
 function Coins() {
   const { isLoading, data } = useQuery<ICoin[]>("allCoins", fetchCoins);
+  // useQuery로 로딩상태와 데이터를 가져올수있음, 데이터타입하고 지정해주고 이름과 api함수 가져오면됨
 
   // const [coins, setCoins] = useState<ICoin[]>([]);
   // const [loading, setLoading] = useState<boolean>(true);
