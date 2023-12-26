@@ -1,9 +1,9 @@
-import axios from "axios";
 import { useEffect, useState } from "react";
 import { Link, Outlet, useLocation, useParams } from "react-router-dom";
 import Loading from "../Components/Loading";
 import { useQuery } from "react-query";
 import { fetchCoinInfo, fetchCoinPrice, fetchMapleOcid } from "../api";
+import { Helmet } from "react-helmet";
 
 interface IInfoData {
   id: string;
@@ -93,9 +93,13 @@ function Coin() {
 
   return (
     <>
+      <Helmet>
+        <title>{name || infoData?.name}</title>
+      </Helmet>
       <div className="text-2xl text-sky-700">
-        여기는 {name || infoData?.name} 정보입니다
+        여기는 {infoData?.name} 정보입니다
       </div>
+
       {loading ? (
         <Loading />
       ) : (

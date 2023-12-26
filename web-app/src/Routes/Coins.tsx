@@ -1,9 +1,9 @@
-import axios from "axios";
-import { useEffect, useState } from "react";
-import { Link, Outlet } from "react-router-dom";
+import { useEffect } from "react";
+import { Link } from "react-router-dom";
 import Loading from "../Components/Loading";
 import { useQuery } from "react-query";
 import { fetchCoins } from "../api";
+import { Helmet } from "react-helmet";
 
 interface ICoin {
   id: string;
@@ -34,6 +34,9 @@ function Coins() {
 
   return (
     <>
+      {/* <Helmet>
+        <title>코인들</title>
+      </Helmet> */}
       <div className="text-4xl">코인</div>
       {isLoading ? (
         <Loading />
