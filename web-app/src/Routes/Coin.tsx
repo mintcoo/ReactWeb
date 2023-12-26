@@ -2,6 +2,8 @@ import axios from "axios";
 import { useEffect, useState } from "react";
 import { Link, Outlet, useLocation, useParams } from "react-router-dom";
 import Loading from "../Components/Loading";
+import { useQuery } from "react-query";
+import { fetchCoinInfo, fetchCoinPrice, fetchMapleOcid } from "../api";
 
 interface IInfoData {
   id: string;
@@ -52,40 +54,34 @@ function Coin() {
   const name = location.state;
   const urlMatch = location.pathname;
 
-  const [infoData, setInfoData] = useState<IInfoData>();
-  const [priceData, setPriceData] = useState<IPriceData>();
-  const [loading, setLoading] = useState<boolean>(true);
+  // const [infoData, setInfoData] = useState<IInfoData>();
+  // const [priceData, setPriceData] = useState<IPriceData>();
+  // const [loading, setLoading] = useState<boolean>(true);
+  // reqct-query 쓰기전 state들
+  const { isLoading: infoLoading, data: infoData } = useQuery<IInfoData>(
+    ["info", coinId],
+    () =>
+      // useQuery는 고유의 key가 필요한데 []로 관리하므로 ["info", coinId]로 고유성부여
+      // useQuery를 여러개쓰면 변수가 겹치니까 이름을 바꿔줘야함 infoLoading, infoData
+      fetchCoinInfo(coinId!)
+  );
+  const { isLoading: priceLoading, data: priceData } = useQuery<IPriceData>(
+    ["ticker", coinId],
+    () => fetchCoinPrice(coinId!)
+  );
+
+  const { isLoading: mapleLoading, data: mapleOcidData } = useQuery<string>(
+    "mapleOcid",
+    fetchMapleOcid
+  );
+  // ========== 연습용 메이플 정보 ============
+
+  const loading = infoLoading || priceLoading;
+  // 로딩이 2개니까
+
   const [tap, setTap] = useState<string>("");
 
-  const getCoinInfo = async () => {
-    const { data } = await axios({
-      url: `${process.env.REACT_APP_API_URL}/maplestory/v1/id`,
-      method: "get",
-      headers: {
-        "x-nxopen-api-key": `${process.env.REACT_APP_API_KEY}`,
-      },
-      params: {
-        // 인자로 보낼 데이터
-        // get요청은 params로 담아 보내야한다
-        character_name: "꿀묘",
-      },
-    });
-    console.log(data.ocid);
-    const { data: coinData } = await axios(
-      `https://api.coinpaprika.com/v1/coins/${coinId}`
-    );
-    const {
-      data: {
-        quotes: { USD: coinPrice },
-      },
-    } = await axios(`https://api.coinpaprika.com/v1/tickers/${coinId}`);
-    setInfoData(coinData);
-    setPriceData(coinPrice);
-    setLoading(false);
-  };
   useEffect(() => {
-    getCoinInfo();
-
     if (urlMatch.includes("price")) {
       setTap("price");
     } else if (urlMatch.includes("chart")) {
