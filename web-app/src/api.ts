@@ -1,6 +1,7 @@
 import axios from "axios";
 
 const BASE_URL = "https://api.coinpaprika.com/v1";
+const BASE_URL_NICO = "https://ohlcv-api.nomadcoders.workers.dev";
 
 export async function fetchCoins() {
   const { data } = await axios(`${BASE_URL}/coins`);
@@ -19,6 +20,13 @@ export async function fetchCoinPrice(coinId: string) {
     },
   } = await axios(`${BASE_URL}/tickers/${coinId}`);
   return coinPrice;
+}
+
+export async function fetchCoinHistory(coinId: string) {
+  const { data: coinHistory } = await axios(
+    `${BASE_URL_NICO}/?coinId=${coinId}`
+  );
+  return coinHistory;
 }
 
 // ============ 연습용 메이플 정보 ===============

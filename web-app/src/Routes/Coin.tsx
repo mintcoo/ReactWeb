@@ -60,10 +60,10 @@ function Coin() {
   // reqct-query 쓰기전 state들
   const { isLoading: infoLoading, data: infoData } = useQuery<IInfoData>(
     ["info", coinId],
-    () =>
-      // useQuery는 고유의 key가 필요한데 []로 관리하므로 ["info", coinId]로 고유성부여
-      // useQuery를 여러개쓰면 변수가 겹치니까 이름을 바꿔줘야함 infoLoading, infoData
-      fetchCoinInfo(coinId!)
+    // useQuery는 고유의 key가 필요한데 []로 관리하므로 ["info", coinId]로 고유성부여
+    // useQuery를 여러개쓰면 변수가 겹치니까 이름을 바꿔줘야함 infoLoading, infoData << 일반 es6 JavaScript임
+    () => fetchCoinInfo(coinId!)
+    // 인자가 필요할땐 익명함수로 fetch 함수를 불러오면서 인자 넣어줌
   );
   const { isLoading: priceLoading, data: priceData } = useQuery<IPriceData>(
     ["ticker", coinId],
@@ -76,7 +76,7 @@ function Coin() {
   );
   // ========== 연습용 메이플 정보 ============
 
-  const loading = infoLoading || priceLoading;
+  const loading = infoLoading && priceLoading;
   // 로딩이 2개니까
 
   const [tap, setTap] = useState<string>("");
@@ -123,7 +123,15 @@ function Coin() {
           Chart
         </Link>
       </div>
-      <Outlet />
+      <Outlet context={{ id: coinId }} />
+      {/* React Router 6에서 Outlet컴포넌트와 useOutletContext()훅을 사용해서 prop 전달하고 받기
+
+// 1. 상위 컴포넌트에서 Outlet컴포넌트에 context에 prop를 전달합니다.
+< Outlet context={{ food: "pizza" }} / >
+
+// 2. 하위 컴포넌트에서 useOutletContext()훅을 이용해서 props를 받아올 수 있습니다.
+import { useOutletContext } from "react-router"; 
+근데 그냥 useParams로 쓰는게 좋은거같음 */}
     </>
   );
 }
