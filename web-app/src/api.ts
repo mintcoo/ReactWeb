@@ -40,8 +40,9 @@ export async function fetchMapleOcid() {
     params: {
       // 인자로 보낼 데이터
       // get요청은 params로 담아 보내야한다
-      character_name: "꿀묘",
+      character_name: "보띠",
     },
   });
+
   return data.ocid;
 }

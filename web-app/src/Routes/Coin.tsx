@@ -67,7 +67,9 @@ function Coin() {
   );
   const { isLoading: priceLoading, data: priceData } = useQuery<IPriceData>(
     ["ticker", coinId],
-    () => fetchCoinPrice(coinId!)
+    () => fetchCoinPrice(coinId!),
+    { refetchInterval: 5000 }
+    // 5초마다 api refetch해주는 매우 유용한옵션
   );
 
   const { isLoading: mapleLoading, data: mapleOcidData } = useQuery<string>(
