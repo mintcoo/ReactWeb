@@ -7,12 +7,14 @@ import Coin from "./Routes/Coin";
 import Coins from "./Routes/Coins";
 import CoinPrice from "./Routes/CoinPrice";
 import CoinChart from "./Routes/CoinChart";
+import ToDoList from "./Routes/ToDoList";
 
 function Router() {
   return (
     <Routes>
       <Route path="" element={<Layout />}>
         <Route path="/" element={<Home />} />
+        <Route path="/todolist" element={<ToDoList />} />
         <Route path="/coins" element={<Coins />} />
 
         <Route path="/coins/:coinId" element={<Coin />}>
